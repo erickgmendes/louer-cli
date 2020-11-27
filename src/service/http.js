@@ -6,5 +6,3 @@ export const http = axios.create({
     "Content-type": "application/json"
   }
 });
-
-// 192.168.0.19

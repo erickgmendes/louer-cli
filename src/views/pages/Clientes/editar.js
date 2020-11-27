@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 
-//import { insertCliente } from '../../../service/cliente-api'
-
 import TableEmail from '../../components/TableEmail'
 import TableTelefone from '../../components/TableTelefone'
 import TableReferencias from '../../components/TableReferencias'
+
+import TipoClienteService from "../../../service/TipoClienteService"
+import TipoPessoaService from "../../../service/TipoPessoaService"
+import TipoTelefoneService from "../../../service/TipoTelefoneService"
+import TipoEmailService from "../../../service/TipoEmailService"
 
 import TextBox from '../../components/TextBox'
 
@@ -13,6 +16,11 @@ class ClienteEditar extends Component {
     super(props);
 
     this.state = {
+      tiposClientes: [],
+      tiposPessoas: [],
+      tiposTelefone: [],
+      tiposEmail: [],
+
       pessoaJuridica: true,
       labelCpfCnpj: 'CNPJ',
       pessoaTipoNome: 'Nome Fantasia',
@@ -40,7 +48,10 @@ class ClienteEditar extends Component {
   }
 
   componentDidMount() {
-
+    TipoClienteService.getAll().then(res => this.setState({ tiposClientes: res.data }));
+    TipoPessoaService.getAll().then(res => this.setState({ tiposPessoas: res.data }));
+    TipoTelefoneService.getAll().then(res => this.setState({ tiposTelefone: res.data }));
+    TipoEmailService.getAll().then(res => this.setState({ tiposEmail: res.data }));
   }
 
   onChangeCpfCnpj = event => {
@@ -92,7 +103,7 @@ class ClienteEditar extends Component {
 
     let { emails } = this.state
     let enderecoEmail = event.target.enderecoEmail.value
-    let key = event.target.enderecoEmail.key
+    //let key = event.target.enderecoEmail.key
 
     if (enderecoEmail) {
       emails.push({ enderecoEmail: enderecoEmail })
@@ -296,8 +307,30 @@ class ClienteEditar extends Component {
   }*/
 
   render() {
+    const { tiposPessoas, tiposClientes, tiposTelefone, tiposEmail } = this.state
+
     return (
       <>
+        Tipos Clientes:<br />
+        <ul>
+          {tiposClientes.map(t => <li>{t.descricao}</li>)}
+        </ul>
+        Tipos Pessoas:<br />
+        <ul>
+          {tiposPessoas.map(t => <li>{t.descricao}</li>)}
+        </ul>
+
+        Tipos Telefone:<br />
+        <ul>
+          {tiposTelefone.map(t => <li>{t.descricao}</li>)}
+        </ul>
+
+        Tipos E-Mail:<br />
+        <ul>
+          {tiposEmail.map(t => <li>{t.descricao}</li>)}
+        </ul>      
+
+
         <form className="pure-form pure-form-stacked">
           <fieldset>
             <legend>Editar Clientes</legend>

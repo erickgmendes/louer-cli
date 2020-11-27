@@ -12,8 +12,7 @@ export default class Clientes extends Component {
   }
 
   componentDidMount() {
-    // ClienteService.getAll().then(res => this.setState({ clientes: res.data }));
-
+    ClienteService.getAll().then(res => this.setState({ clientes: res.data }));
   }
 
   removerCliente = event => {
@@ -42,10 +41,19 @@ export default class Clientes extends Component {
   }
 
   render() {
+    const { clientes } = this.state
+
+    console.log(clientes)
+
     return (
-      <div className="container">
-        
-      </div>
+      <>
+        <div className="container">
+          Clientes:<br />
+          <ul>
+            {clientes.map(t => <li key={t.id}>{t.nome}</li>)}
+          </ul>
+        </div>
+      </>
     )
   }
 }
